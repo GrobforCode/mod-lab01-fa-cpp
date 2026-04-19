@@ -1,10 +1,14 @@
 // Copyright 2022 UNN-IASR
 #include "fun.h"
 #include <cctype>
+
+enum State { OUT, IN };
+
 unsigned int faStr1(const char *str) {
     State state = OUT;
     unsigned int count = 0;
     bool hasDigit = false;
+
     for (const char *p = str; *p; ++p) {
         if (state == OUT) {
             if (!std::isspace(static_cast<unsigned char>(*p))) {
@@ -37,7 +41,7 @@ unsigned int faStr2(const char *str) {
     State state = OUT;
     unsigned int count = 0;
     bool valid = false;
-    
+
     for (const char *p = str; *p; ++p) {
         unsigned char c = static_cast<unsigned char>(*p);
         if (state == OUT) {
@@ -78,7 +82,7 @@ unsigned int faStr3(const char *str) {
     unsigned int wordCount = 0;
     unsigned int totalLength = 0;
     int currentLen = 0;
-    
+
     for (const char *p = str; *p; ++p) {
         if (state == OUT) {
             if (!std::isspace(static_cast<unsigned char>(*p))) {
@@ -99,13 +103,11 @@ unsigned int faStr3(const char *str) {
         ++wordCount;
         totalLength += currentLen;
     }
-    
+
     if (wordCount == 0) {
         return 0;
     }
-    
-    // Математическое округление: (totalLength + wordCount/2) / wordCount
-    // Но для целочисленного округления к ближайшему целому:
-    // прибавляем половину делителя перед делением
+
+    // Математическое округление: (totalLength * 10 / wordCount + 5) / 10
     return (totalLength * 10 / wordCount + 5) / 10;
 }
