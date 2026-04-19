@@ -5,7 +5,6 @@ unsigned int faStr1(const char *str) {
     State state = OUT;
     unsigned int count = 0;
     bool hasDigit = false;
-    
     for (const char *p = str; *p; ++p) {
         if (state == OUT) {
             if (!std::isspace(static_cast<unsigned char>(*p))) {
